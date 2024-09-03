@@ -1,0 +1,142 @@
+{
+    "ActionBar": {
+        "Items": "/SAPAssetManager/Pages/WCM/Fragments/FilterActionBarItems.fragment"
+    },
+    "Caption": "$(L,filter)",
+    "OnActivityBackPressed": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/CancelCheckOnBackNavAndroid.js",
+    "Result": "/SAPAssetManager/Rules/WCM/WorkApprovals/List/WorkApprovalsListViewFilterResults.js",
+    "Controls": [
+        {
+            "Sections": [
+                {
+                    "Controls": [{
+                        "_Type": "Fragment",
+                        "Fragment": "/SAPAssetManager/Pages/Fragments/Filter/SortByFilter.fragment",
+                        "Properties": {
+                            "SortByItems": [
+                                {
+                                    "ReturnValue": "ShortText",
+                                    "DisplayValue": "$(L,description)"
+                                },
+                                {
+                                    "ReturnValue": "ValidTo",
+                                    "DisplayValue": "$(L,wcm_valid_to)"
+                                },
+                                {
+                                    "ReturnValue": "WCMApproval",
+                                    "DisplayValue": "$(L,wcm_work_approval_id)"
+                                }
+                            ]
+                        }
+                    }]
+                },
+                {
+                    "Controls": [
+                        {
+                            "_Type": "Fragment",
+                            "Fragment": "/SAPAssetManager/Pages/WCM/Fragments/HeaderStatusFilter.fragment",
+                            "Properties":{
+                                "PickerItems": "/SAPAssetManager/Rules/WCM/WorkApprovals/List/WorkApprovalsHeaderStatuses.js",
+                                "OnValueChange": "/SAPAssetManager/Rules/Filter/RedrawFilterToolbar.js"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "Controls": [
+                        {
+                            "_Type": "Fragment",
+                            "Fragment":"/SAPAssetManager/Pages/WCM/Fragments/FunctionalLocationFilter.fragment",
+                            "Properties": {
+                                "Value": "{FuncLoc}",
+                                "FilterProperty": "FuncLoc"
+                            }
+                        },
+                        {
+                            "_Type": "Fragment",
+                            "Fragment":"/SAPAssetManager/Pages/WCM/Fragments/EquipmentFilter.fragment",
+                            "Properties": {
+                                "Value": "{Equipment}",
+                                "FilterProperty": "Equipment"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "Controls": [
+                        {
+                            "_Type": "Control.Type.FormCell.Switch",
+                            "_Name": "ValidFromFilterVisibleSwitch",
+                            "Caption": "$(L,wcm_valid_from)",
+                            "Value": false,
+                            "OnValueChange": "/SAPAssetManager/Rules/WCM/WorkApprovals/List/WorkApprovalsFilterPageDateVisibilityChanged.js",
+                            "IsVisible": true
+                        },
+                        {
+                            "_Type": "Fragment",
+                            "Fragment": "/SAPAssetManager/Pages/WCM/Fragments/DateFromFilter.fragment",
+                            "Properties": {
+                                "_Name":"ValidFromDatePickerStart",
+                                "OnValueChange": "/SAPAssetManager/Rules/Filter/RedrawFilterToolbar.js"
+                            }
+                        },
+                        {
+                            "_Type": "Fragment",
+                            "Fragment": "/SAPAssetManager/Pages/WCM/Fragments/DateToFilter.fragment",
+                            "Properties": {
+                                "_Name": "ValidFromDatePickerEnd",
+                                "OnValueChange": "/SAPAssetManager/Rules/Filter/RedrawFilterToolbar.js"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "Controls": [
+                        {
+                            "_Type": "Control.Type.FormCell.Switch",
+                            "_Name": "ValidToFilterVisibleSwitch",
+                            "Caption": "$(L,wcm_valid_to)",
+                            "Value": false,
+                            "OnValueChange": "/SAPAssetManager/Rules/WCM/WorkApprovals/List/WorkApprovalsFilterPageDateVisibilityChanged.js",
+                            "IsVisible": true
+                        },
+                        {
+                            "_Type": "Fragment",
+                            "Fragment": "/SAPAssetManager/Pages/WCM/Fragments/DateFromFilter.fragment",
+                            "Properties": {
+                                "_Name":"ValidToDatePickerStart",
+                                "OnValueChange": "/SAPAssetManager/Rules/Filter/RedrawFilterToolbar.js"
+                            }
+                        },
+                        {
+                            "_Type": "Fragment",
+                            "Fragment": "/SAPAssetManager/Pages/WCM/Fragments/DateToFilter.fragment",
+                            "Properties": {
+                                "_Name":"ValidToDatePickerEnd",
+                                "OnValueChange": "/SAPAssetManager/Rules/Filter/RedrawFilterToolbar.js"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "_Name": "FormCellContainer",
+            "_Type": "Control.Type.FormCellContainer"
+        }
+    ],
+    "ToolBar": {
+        "Controls": [
+            "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment",
+            {
+				"_Type": "Fragment",
+                "Fragment": "/SAPAssetManager/Pages/Fragments/Filter/ResetFilterToolbarItem.fragment",
+				"Properties": {
+                    "OnPress": "/SAPAssetManager/Rules/Filter/FilterResetToDefault.js"
+				}
+			},
+            "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment"
+        ]
+    },
+    "_Type": "Page",
+    "_Name": "WorkApprovalsFilterPage",
+    "OnLoaded": "/SAPAssetManager/Rules/WCM/WorkApprovals/List/WorkApprovalsFilterOnLoaded.js"
+}

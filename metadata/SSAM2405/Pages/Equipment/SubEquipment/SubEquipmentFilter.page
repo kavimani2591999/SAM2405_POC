@@ -1,0 +1,71 @@
+{
+    "OnActivityBackPressed": "/SAPAssetManager/Rules/WorkOrders/CreateUpdate/CancelCheckOnBackNavAndroid.js",
+    "ActionBar": {
+        "Items": [
+            {
+                "Position": "Left",
+                "SystemItem": "Cancel",
+                "Caption": "$(L,cancel)",
+                "OnPress": "/SAPAssetManager/Actions/Page/CancelPage.action"
+            },
+            {
+                "Position": "Right",
+                "SystemItem": "/SAPAssetManager/Rules/Filter/FilterSystemItem.js",
+                "Text": "/SAPAssetManager/Rules/Filter/FilterText.js",
+                "OnPress": "/SAPAssetManager/Rules/Filter/ApplyFilterAndSave.js"
+            }
+        ]
+    },
+    "Caption":"$(L,filter)",
+    "Result":
+    [
+        "#Page:SubEquipmentFilterPage/#Control:SortFilter/#Value",
+        "#Page:SubEquipmentFilterPage/#Control:StatusFilter/#Value"
+    ],
+    "Controls":
+    [{
+        "Sections":
+        [{
+            "Controls":
+            [{
+                "_Type": "Fragment",
+                "Fragment": "/SAPAssetManager/Pages/Fragments/Filter/SortByFilter.fragment",
+                "Properties": {
+                    "SortByItems": [
+                        {
+                            "ReturnValue":"EquipId",
+                            "DisplayValue":"$(L,equipment_id)"
+                        },
+                        {
+                            "ReturnValue":"EquipDesc",
+                            "DisplayValue":"$(L,description)"
+                        }      
+                    ]
+                }
+            }]
+        },
+        {
+            "Controls":
+            [{
+                "_Type": "Fragment",
+                "Fragment": "/SAPAssetManager/Pages/Fragments/Filter/MobileStatusFilter.fragment",
+				"Properties": {
+                    "_Name": "StatusFilter",
+                    "FilterProperty":"/SAPAssetManager/Rules/Equipment/EquipmentStatus.js"
+				}
+            }]
+        }],
+        "_Name":"FormCellContainer",
+        "_Type":"Control.Type.FormCellContainer"
+    }],
+    "ToolBar": {
+        "Controls": [
+            "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment",
+            "/SAPAssetManager/Pages/Fragments/Filter/ResetFilterToolbarItem.fragment",
+            "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment"
+        ]
+    },
+    "_Type":"Page",
+    "_Name":"SubEquipmentFilterPage",
+    "OnLoaded": "/SAPAssetManager/Rules/Filter/FilterOnLoaded.js"
+}

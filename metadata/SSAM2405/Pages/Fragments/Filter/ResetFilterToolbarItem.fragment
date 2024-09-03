@@ -1,0 +1,8 @@
+{
+    "_Name": "ResetFilterTbI0",
+    "_Type": "Control.Type.ToolbarItem",
+    "Caption": "$(L,reset)",
+    "OnPress": "/SAPAssetManager/Rules/Filter/FilterReset.js",
+    "Enabled": "/SAPAssetManager/Rules/Filter/ResetFilterEnabled.js",
+    "ItemType": "Button"
+}

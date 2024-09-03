@@ -1,0 +1,9 @@
+{
+    "mdk.referenceApplications": [
+        {
+            "name": "SAPAssetManager",
+            "path": "c:\\ARAMCO\\SAM2405\\SAM.mdkproject\\metadata\\SSAM2405\\Application.app",
+            "comp": "ZSSAM2405"
+        }
+    ]
+}

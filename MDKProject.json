@@ -1,0 +1,11 @@
+{
+  "AppName": "SvcAssetMgr",
+  "AppDisplayName": "Svc&AssetMgr",
+  "AppVersion": "2405.0.2",
+  "BundleID": "com.sap.tabreed.mobile.assetmanager",
+  "Externals": ["@nativescript/geolocation", "extension-LocationService", "extension-GenericWebView", "extension-SAMFoundation", "uuid", "@nstudio/nativescript-dynatrace", "@nativescript/core/accessibility", "xml-js", "stream", "buffer", "emitter" ],
+  "NSPlugins":  ["@nativescript/geolocation@8.3.1", "@nstudio/nativescript-dynatrace@1.0.1"],
+  "NPMPlugins": ["uuid@9.0.1", "nativescript-dev-xcode", "@nativescript/hook", "xml-js", "stream", "buffer", "emitter"],
+  "UrlScheme": "samclient",
+    "BaseProject": "SAPAssetManager"
+}

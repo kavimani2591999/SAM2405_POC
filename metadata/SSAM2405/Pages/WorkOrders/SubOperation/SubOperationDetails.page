@@ -1,0 +1,250 @@
+{
+    "Caption": "/SAPAssetManager/Rules/WorkOrders/SubOperations/WorkOrderSubOperationHeader.js",
+    "OnReturning": "/SAPAssetManager/Rules/SubOperations/SubOperationOnPageReturning.js",
+    "OnUnloaded": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarClassResetOnPageUnloaded.js",
+    "ActionBar": {
+        "Items": [
+            {
+                "Position": "Right",
+                "SystemItem": "Edit",
+                "Caption": "$(L,edit)",
+                "Visible": "/SAPAssetManager/Rules/UserAuthorizations/WorkOrders/EnableWorkOrderEdit.js",
+                "OnPress": "/SAPAssetManager/Rules/SubOperations/SubOperationUpdateNav.js"
+            },
+            {
+                "Position": "Right",
+                "SystemItem": "Add",
+                "Caption": "$(L,add)",
+                "OnPress":"/SAPAssetManager/Rules/WorkOrders/SubOperations/WorkOrderSubOperationDetailsPopover.js",
+                "Visible": "/SAPAssetManager/Rules/UserAuthorizations/WorkOrders/EnableWorkOrderEdit.js"
+            }
+        ]
+    },
+    "Controls": [
+        {
+            "Sections": [
+                {
+                    "_Type": "Fragment",
+                    "Fragment": "/SAPAssetManager/Pages/Fragments/WorkOrder/WorkOrderDetails/ProgressTrackerSectionWorkOrderDetails.fragment",
+                    "Properties": {
+                        "Header": {
+                            "Caption": "$(L, activity)",
+                            "UseTopPadding": false
+                        }
+                    }
+                },
+                {
+					"_Type": "Section.Type.KeyValue",
+					"_Name": "WorkOrderOperationDetailsSection",
+					"Header": {
+						"Caption": "$(L,suboperation_details)"
+					},
+					"KeyAndValues": [
+						{
+                            "_Name": "OperationShortText",
+							"KeyName": "$(L,description)",
+							"Value": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/WorkOrderOperationShortText.js"
+						},
+						{
+                            "_Name": "ControlKey",
+							"KeyName": "$(L,control_key)",
+							"Value": "{ControlKey}"
+						},
+						{
+                            "_Name": "MainWorkCenterPlant",
+							"KeyName": "$(L,work_center_plant)",
+							"Value": "{MainWorkCenterPlant}"
+						},
+						{
+                            "_Name": "MainWorkCenter",
+							"KeyName": "$(L,work_center)",
+							"Value": "{MainWorkCenter}"
+						},
+						{
+                            "_Name": "OperationFunctionLocation",
+							"KeyName": "$(L,functional_location)",
+							"Value": "#Property:FunctionalLocationSubOperation/#Property:FuncLocDesc"
+						},
+                        {
+                            "_Name": "NumberOfCapacities",
+                            "KeyName": "$(L,number_of_capacities)",
+							"Value": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationNumberOfCapacities.js"
+                        },
+                        {
+                            "_Name": "Duration",
+                            "KeyName": "$(L,duration_per_tech)",
+							"Value": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationDuration.js"
+                        },
+                        {
+                            "_Name": "DurationUOM",
+                            "KeyName": "$(L,duration_uom)",
+							"Value": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationDurationUOM.js"
+                        },
+                        {
+                            "_Name": "Work",
+                            "KeyName": "$(L,work)",
+							"Value": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationWork.js"
+                        },
+                        {
+                            "_Name": "WorkUnit",
+                            "KeyName": "$(L,work_unit)",
+							"Value": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationWorkUnit.js"
+                        }
+                    ],
+                    "Target": {
+                        "EntitySet": "{@odata.readLink}",
+                        "Service": "/SAPAssetManager/Services/AssetManager.service",
+                        "QueryOptions": "$select=OperationShortText,ControlKey,MainWorkCenterPlant,MainWorkCenter,FunctionalLocationSubOperation/FuncLocDesc,Work,WorkUnit,NumberOfCapacities,Duration,DurationUOM&$expand=FunctionalLocationSubOperation"
+                    }
+				},
+                {
+                    "Header": {
+                        "Caption": "$(L,operation)"
+                    },
+                    "ObjectCell": {
+                        "Icons": "/SAPAssetManager/Rules/Operations/OperationsListViewIconImages.js",
+                        "AccessoryType": "DisclosureIndicator",
+                        "Title": "{{#Property:OperationShortText}} ({{#Property:OperationNo}})",
+                        "Footnote": "/SAPAssetManager/Rules/WorkOrders/Operations/WorkOrderDueDate.js",
+                        "OnPress": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/WorkOrderOperationDetailsNav.js",
+                        "Subhead": "{OrderId}",
+                        "StatusText": "/SAPAssetManager/Rules/MobileStatus/OperationMobileStatus.js"
+                    },
+                    "Target": {
+                        "EntitySet": "{{#Property:@odata.readLink}}/WorkOrderOperation",
+                        "Service": "/SAPAssetManager/Services/AssetManager.service",
+                        "QueryOptions": "/SAPAssetManager/Rules/WorkOrders/Operations/WorkOrderOperationsTableQueryOption.js"
+                    },
+                    "_Name": "OperationsObjectTable",
+                    "_Type": "Section.Type.ObjectTable",
+                    "DataSubscriptions": ["Confirmations", "PMMobileStatuses", "MyWorkOrderOperations"]
+                },
+                {
+                    "_Type": "Fragment",
+                    "Fragment": "/SAPAssetManager/Pages/Fragments/Equipment/ObjectTableSection.fragment",
+                    "Properties": {
+                        "Footer": {
+                            "Visible": false
+                        },
+                        "ObjectCell": {
+                            "StatusText": ""
+                        },
+                         "Target": {
+                            "EntitySet": "{{#Property:@odata.readLink}}/EquipmentSubOperation",
+                            "QueryOptions": "$select=EquipDesc,EquipId"
+                        },
+                        "DataSubscriptions": []
+                    }
+                },
+                {
+                    "Header": {
+                        "Caption": "$(L,functional_location)"
+                    },
+                    "EmptySection": {
+                        "Caption": "$(L,no_functional_location_available)"
+                    },
+                    "ObjectCell": {
+                        "AccessoryType": "DisclosureIndicator",
+                        "Title": "{FuncLocDesc}",
+                        "OnPress":"/SAPAssetManager/Actions/FunctionalLocation/FunctionalLocationDetailsNav.action",
+                        "PreserveIconStackSpacing": false,
+                        "Subhead": "{FuncLocId}"
+                    },
+                    "Target": {
+                        "EntitySet": "{{#Property:@odata.readLink}}/FunctionalLocationSubOperation",
+                        "Service": "/SAPAssetManager/Services/AssetManager.service",
+                        "QueryOptions": ""
+                    },
+                    "_Type": "Section.Type.ObjectTable"
+                },
+                {
+                    "_Type": "Fragment",
+                    "Fragment": "/SAPAssetManager/Pages/Fragments/Forms/SDF/FormObjectTableSection.fragment",
+                    "Properties": {
+                        "MaxItemCount": 2,
+                        "Visible": "/SAPAssetManager/Rules/Forms/SDF/SDFIsFeatureEnabled.js"
+                    }
+                },
+                {
+                    "SimplePropertyCells":
+                    [
+                        {
+                            "SimplePropertyCell": {
+                                "AccessoryType": "DisclosureIndicator",
+                                "KeyName": "$(L,related_notifications)",
+                                "Value": "/SAPAssetManager/Rules/Notifications/RelatedNotifications/RelatedNotificationsCount.js",
+                                "OnPress": "/SAPAssetManager/Actions/Notifications/RelatedNotifications/RelatedNotificationsListViewNav.action"
+                            }
+                        },
+                        {
+                        "SimplePropertyCell": {
+                            "AccessoryType": "DisclosureIndicator",
+                            "KeyName": "$(L,notes)",
+                            "Value": "/SAPAssetManager/Rules/Notes/NotesCount.js",
+                            "OnPress": "/SAPAssetManager/Rules/Notes/NotesViewNav.js"
+                        }
+                    }],
+                    "Layout":
+                    {
+                        "NumberOfColumns" : 2,
+                        "MinimumInteritemSpacing": "$(PLT,66,0)"
+                    },
+                    "_Type" : "Section.Type.SimplePropertyCollection",
+                    "DataSubscriptions": ["MyWorkOrderSubOperationLongTexts", "NotificationHistories"]
+                }
+            ],
+            "_Type": "Control.Type.SectionedTable"
+        }
+    ],
+    "ToolBar": {
+        "Visible": "/SAPAssetManager/Rules/SubOperations/SubOperationDetailsToolbarVisibility.js",
+        "Controls": [
+            {
+				"_Name": "FlexibleSpaceLeft",
+				"_Type": "Control.Type.ToolbarItem",
+				"SystemItem": "FlexibleSpace",
+				"Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsLeftSpaceVisible.js"
+			},
+            {
+                "_Name": "SubOperationDetailsPageTbI0",
+                "_Type": "Control.Type.ToolbarItem",
+                "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+                "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+                "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+                "ItemType": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemType.js",
+                "DataSubscriptions": ["Confirmations"]
+            },
+            {
+				"_Name": "FlexibleSpaceMiddle",
+				"_Type": "Control.Type.ToolbarItem",
+				"SystemItem": "FlexibleSpace",
+				"Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsMiddleSpaceVisible.js"
+			},
+            {
+                "_Name": "SubOperationDetailsPageTbI1",
+                "_Type": "Control.Type.ToolbarItem",
+                "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+                "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+                "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+                "DataSubscriptions": ["Confirmations"]
+            },
+            {
+				"_Name": "FlexibleSpaceRight",
+				"_Type": "Control.Type.ToolbarItem",
+				"SystemItem": "FlexibleSpace",
+				"Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsRightSpaceVisible.js"
+			},
+            {
+                "_Name": "SubOperationDetailsPageTbI2",
+                "_Type": "Control.Type.ToolbarItem",
+                "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+                "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+                "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+                "DataSubscriptions": ["Confirmations"]
+            }
+        ]
+    },
+    "_Type": "Page",
+    "_Name": "SubOperationDetailsPage",
+    "DataSubscriptions": ["MyWorkOrderOperations","MyWorkOrderSubOperations","Confirmations"]
+}

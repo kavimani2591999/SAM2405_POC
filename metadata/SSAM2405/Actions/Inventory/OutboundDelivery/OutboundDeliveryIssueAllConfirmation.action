@@ -1,0 +1,8 @@
+{
+	"_Type": "Action.Type.Message",
+	"Title": "$(L,issue_all_items)",
+	"Message": "$(L, confirm_issue_all_items)",
+    "OKCaption": "$(L,continue_text)",
+    "CancelCaption": "$(L,cancel)",
+    "OnOK": "/SAPAssetManager/Rules/Inventory/OutboundDelivery/SetGoodsReceiptOutboundDeliveryWithItems.js"
+}

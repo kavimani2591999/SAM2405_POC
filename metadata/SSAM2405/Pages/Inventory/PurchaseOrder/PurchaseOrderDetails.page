@@ -1,0 +1,77 @@
+{
+	"Caption": "$(L,po_detail_title)",
+		"ActionBar": {
+		"Items": [
+			"/SAPAssetManager/Pages/Fragments/SyncButton.fragment"
+		]
+	},
+	"Controls": [
+		{
+			"Sections": [
+				{
+					"ObjectHeader": {
+						"DetailImageIsCircular": false,
+						"HeadlineText": "{PurchaseOrderId}",
+						"PreserveIconStackSpacing": false
+					},
+					"_Name": "SectionObjectHeader",
+					"_Type": "Section.Type.ObjectHeader"
+				}
+			],
+			"_Name": "SectionedTable",
+			"_Type": "Control.Type.SectionedTable"
+		},
+		{
+			"Items": [{
+				"_Name": "ItemsListTab",
+				"Caption": "$(L, items)",
+				"PageToOpen" : "/SAPAssetManager/Pages/Inventory/PurchaseOrder/PurchaseOrderItemsList.page",
+				"OnPress": "/SAPAssetManager/Rules/Inventory/PurchaseOrder/PurchaseOrderItemsListOnPress.js",
+				"_Type": "Control.Type.TabItem"
+			},
+			{
+				"_Name": "MaterialDocumentsListTab",
+				"Caption": "$(L, material_list_title_no_count)",
+				"PageToOpen" : "/SAPAssetManager/Pages/Inventory/PurchaseOrder/POMaterialDocItemsList.page",
+				"_Type": "Control.Type.TabItem"
+			},
+			{
+				"_Name": "PurchaseOrderHeaderTab",
+				"Caption": "$(L, header)" ,
+				"PageToOpen" : "/SAPAssetManager/Pages/Inventory/PurchaseOrder/PurchaseOrderHeader.page",
+				"PageMetadata": "/SAPAssetManager/Rules/Inventory/PurchaseOrderHeaderPageMetadata.js",
+				"_Type": "Control.Type.TabItem"	
+			}],
+			"Position": "Top",
+			"_Type": "Control.Type.Tabs",
+			"_Name": "TabsControl"
+  		}
+	],
+    "ToolBar": {
+        "Controls": [
+            {
+                "_Name": "FlexibleSpaceLeftTbI",
+                "_Type": "Control.Type.ToolbarItem",
+                "SystemItem": "FlexibleSpace",
+				"Visible": "/SAPAssetManager/Rules/Common/IsFlexibleSpaceVisible.js"
+            },
+            {
+                "_Name": "ReceivePartTbI",
+                "_Type": "Control.Type.ToolbarItem",
+                "Enabled" : "/SAPAssetManager/Rules/Inventory/IssueOrReceipt/BulkUpdate/BulkGoodsReceiptIsAllowed.js",
+                "Caption": "$(L,receive_all)",
+                "OnPress": "/SAPAssetManager/Rules/Inventory/PurchaseOrder/SetPurchaseOrderGoodsReceiptReceiveAll.js"
+            },
+            {
+                "_Name": "FlexibleSpaceRightTbI",
+                "_Type": "Control.Type.ToolbarItem",
+                "SystemItem": "FlexibleSpace",
+				"Visible": "/SAPAssetManager/Rules/Common/IsFlexibleSpaceVisible.js"
+            }
+        ]
+    },
+    "DataSubscriptions": ["PurchaseOrderHeaders", "MaterialDocItems","MaterialDocuments","PurchaseOrderItems"],
+	"OnReturning": "/SAPAssetManager/Rules/Inventory/PurchaseOrder/PurchaseOrderDetailsPageOnReturn.js",
+	"_Name": "PurchaseOrderDetails",
+	"_Type": "Page"
+}

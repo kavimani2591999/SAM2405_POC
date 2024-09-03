@@ -1,0 +1,95 @@
+{
+	"Caption": "$(L, online_search)",
+	"ActionBar": {
+		"Items": [
+			{
+				"_Name": "SelectAll",
+				"Position": "Right",
+				"Text": "$(L,select_all)",
+				"Visible": "/SAPAssetManager/Rules/OnlineSearch/SelectAllButtonVisible.js",
+				"OnPress": "/SAPAssetManager/Rules/OnlineSearch/SelectAllItems.js"
+			},
+			{
+				"_Name": "DeselectAll",
+				"Position": "Right",
+				"Text": "$(L,deselect_all)",
+				"Visible": "/SAPAssetManager/Rules/OnlineSearch/DeselectAllButtonVisible.js",
+				"OnPress": "/SAPAssetManager/Rules/OnlineSearch/DeselectAllItems.js"
+			},
+			{
+				"_Name": "Cancel",
+				"Position": "Left",
+				"Text": "$(L, cancel)",
+				"OnPress": "/SAPAssetManager/Rules/OnlineSearch/ListViewToggleMode.js",
+				"Visible": "/SAPAssetManager/Rules/OnlineSearch/ItemActiveInSelectMode.js"
+			},
+			{
+				"_Name": "Select",
+				"Position": "Right",
+				"IconText": "SelectIcon",
+				"Text": "$(L, select)",
+				"Visible": "/SAPAssetManager/Rules/OnlineSearch/SelectModeButtonVisible.js",
+				"OnPress": "/SAPAssetManager/Rules/OnlineSearch/ListViewToggleMode.js"
+			},
+			{
+				"Position": "Right",
+				"_Name": "SearchCriteria",
+				"Text": "/SAPAssetManager/Rules/OnlineSearch/SearchButtonCaption.js",
+				"Visible": "/SAPAssetManager/Rules/OnlineSearch/OnlineSearchCriteriaVisible.js",
+				"OnPress": "/SAPAssetManager/Rules/OnlineSearch/OnlineSearchCriteriaPopover.js"
+			}
+		]
+	},
+	"Controls": [
+		{
+			"Items": [
+				{ 
+					"_Name": "EquipmentTab", 
+					"Caption": "$(L, equipments)",
+					"_Type": "Control.Type.TabItem",
+					"PageToOpen": "/SAPAssetManager/Pages/OnlineSearch/EquipmentListView.page",
+					"OnPress": "/SAPAssetManager/Rules/OnlineSearch/RedrawActionbarToolbar.js"
+				},
+				{ 
+					"_Name": "FuncLocTab", 
+					"Caption": "$(L, functional_location)",
+					"_Type": "Control.Type.TabItem",
+					"PageToOpen": "/SAPAssetManager/Pages/OnlineSearch/FuncLocListView.page",
+					"OnPress": "/SAPAssetManager/Rules/OnlineSearch/RedrawActionbarToolbar.js"
+				}
+			],
+			"SwipeEnabled": false,
+			"Position": "Top",
+			"_Type": "Control.Type.Tabs",
+			"_Name": "TabsControl"
+  		}
+	],
+	"ToolBar":
+	{
+		"Controls":
+		[{
+			"_Type": "Fragment",
+			"Fragment": "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment",
+			"Properties": {
+				"_Name": "LeftSpace"
+			}
+		},
+		{
+			"_Name": "ConfirmBtn",
+			"_Type": "Control.Type.ToolbarItem",
+			"Caption": "$(L,download)",
+			"Enabled": "/SAPAssetManager/Rules/OnlineSearch/DownloadButtonEnabled.js"
+		},
+		{
+			"_Type": "Fragment",
+			"Fragment": "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment",
+			"Properties": {
+				"_Name": "RightSpace"
+			}
+		}],
+		"Visible": "/SAPAssetManager/Rules/OnlineSearch/ItemActiveInSelectMode.js"
+	},
+	"OnReturning": "/SAPAssetManager/Rules/OnlineSearch/OnlineSearchOnReturn.js",
+	"_Name": "OnlineSearch",
+	"_Type": "Page"
+}

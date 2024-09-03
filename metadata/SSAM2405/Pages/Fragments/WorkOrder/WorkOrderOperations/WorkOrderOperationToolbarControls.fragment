@@ -1,0 +1,45 @@
+[
+    {
+        "_Name": "FlexibleSpaceLeft",
+        "_Type": "Control.Type.ToolbarItem",
+        "SystemItem": "FlexibleSpace",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsLeftSpaceVisible.js"
+    },
+    {
+        "_Name": "WorkOrderOperationDetailsPageTbI0",
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+        "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+        "ItemType": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemType.js",
+        "DataSubscriptions": ["Confirmations", "Employees"]
+    },
+    {
+        "_Name": "FlexibleSpaceMiddle",
+        "_Type": "Control.Type.ToolbarItem",
+        "SystemItem": "FlexibleSpace",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsMiddleSpaceVisible.js"
+    },
+    {
+        "_Name": "WorkOrderOperationDetailsPageTbI1",
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+        "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+        "DataSubscriptions": ["Confirmations", "Employees"]
+    },
+    {
+        "_Name": "FlexibleSpaceRight",
+        "_Type": "Control.Type.ToolbarItem",
+        "SystemItem": "FlexibleSpace",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsRightSpaceVisible.js"
+    },
+    {
+        "_Name": "WorkOrderOperationDetailsPageTbI2",
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+        "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+        "DataSubscriptions": ["Confirmations", "Employees"]
+    }
+]

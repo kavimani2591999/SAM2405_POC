@@ -1,0 +1,10 @@
+{
+	"_Type": "Action.Type.RestService.SendRequest",
+	"Target": {
+		"Service": "/SAPAssetManager/Services/ESRIRest.service",
+		"Path": "/SAPAssetManager/Rules/ESRI/GetTokenPath.js",
+		"RequestProperties": {
+			"Method": "GET"
+		}
+	}
+}

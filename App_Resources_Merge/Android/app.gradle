@@ -1,0 +1,34 @@
+// add gradle dependencies here
+
+android {
+    defaultConfig {
+        minSdkVersion 30
+        targetSdkVersion 34
+    }
+}
+
+project.ext {
+    googlePlayServicesVersion = "21.+"
+}
+dependencies {
+    def googlePlayServicesVersion = project.googlePlayServicesVersion
+    implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+    implementation(deps.flowsv2) {
+        exclude group: 'org.slf4j'
+    }
+    implementation(deps.onboarding) {
+        exclude group: 'org.slf4j'
+    }
+    implementation(deps.odata) {
+        exclude group: 'org.slf4j'
+    }
+    implementation(deps.offlineOData) {
+        exclude group: 'org.slf4j'
+    }
+    implementation(deps.foundation) {
+        exclude group: 'org.slf4j'
+    }
+    implementation(deps.foundation_app_security) {
+        exclude group: 'org.slf4j'
+    }
+}

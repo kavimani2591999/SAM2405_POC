@@ -1,0 +1,6 @@
+{
+	"DestinationName": "com.sap.esri.token.authentication",
+	"ServiceUrl": "/destinations/mobileservices",
+	"OfflineEnabled": false,
+	"SourceType": "Mobile"
+}

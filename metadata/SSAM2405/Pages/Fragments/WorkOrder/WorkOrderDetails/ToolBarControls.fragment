@@ -1,0 +1,45 @@
+[
+    {
+        "_Name": "FlexibleSpaceLeft",
+        "_Type": "Control.Type.ToolbarItem",
+        "SystemItem": "FlexibleSpace",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsLeftSpaceVisible.js"
+    },
+    {
+        "_Name": "WorkOrderDetailsPageTbI0",
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+        "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+        "ItemType": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemType.js",
+        "DataSubscriptions": ["Confirmations", "MyWorkOrderHeaders"]
+    },
+    {
+        "_Name": "FlexibleSpaceMiddle",
+        "_Type": "Control.Type.ToolbarItem",
+        "SystemItem": "FlexibleSpace",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsMiddleSpaceVisible.js"
+    },
+    {
+        "_Name": "WorkOrderDetailsPageTbI1",
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+        "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+        "DataSubscriptions": ["Confirmations", "MyWorkOrderHeaders"]
+    },
+    {
+        "_Name": "FlexibleSpaceRight",
+        "_Type": "Control.Type.ToolbarItem",
+        "SystemItem": "FlexibleSpace",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/IsRightSpaceVisible.js"
+    },
+    {
+        "_Name": "WorkOrderDetailsPageTbI2",
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetCaption.js",
+        "OnPress": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetOnPress.js",
+        "Visible": "/SAPAssetManager/Rules/Common/DetailsPageToolbar/ToolbarItemGetVisibility.js",
+        "DataSubscriptions": ["Confirmations", "MyWorkOrderHeaders"]
+    }
+]

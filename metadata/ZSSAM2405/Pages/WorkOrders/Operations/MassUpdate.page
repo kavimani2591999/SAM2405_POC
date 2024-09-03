@@ -1,0 +1,21 @@
+{
+    "ActionBar": {
+            "Items": [
+                {
+                    "Position": "left",
+                    "SystemItem": "Cancel",
+                    "Caption": "$(L,cancel)",
+                    "OnPress":  "/SAPAssetManager/Actions/Page/ClosePage.action"
+                },
+                {
+                    "Position": "right",
+                    "SystemItem": "Done",
+                    "Text": "/SAPAssetManager/Rules/Common/Platform/DoneText.js",
+                    "Visible": true
+                }
+            ]
+        },
+    
+    "_Type": "Page",
+    "_Name": "MassUpdatePage"
+}

@@ -1,0 +1,13 @@
+{
+    "Caption": "$(L,measuring_point_reading_history)",
+    "Controls": [
+        {
+            "Sections": [
+                "/SAPAssetManager/Pages/Fragments/Measurements/PointHistoryDataTable.fragment"
+            ],
+            "_Type": "Control.Type.SectionedTable"
+        }
+    ],
+    "_Type": "Page",
+    "_Name": "MeasuringPointHistoryListViewPage"
+}

@@ -1,0 +1,23 @@
+{
+    "Header": {
+        "Caption": "$(L,assets)",
+        "UseTopPadding": false
+    },
+    "EmptySection": {
+        "Caption": "$(L,no_assets_available)"
+    },
+    "ObjectCell": {
+        "AccessoryType": "DisclosureIndicator",
+        "Title": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/AssetTitle.js",
+        "DetailImage": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/AssetDetailImage.js",
+        "OnPress": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/AssetOnPress.js",
+        "PreserveIconStackSpacing": false,
+        "Subhead": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/AssetSubhead.js",
+        "Icons": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/AssetIcons.js",
+        "Footnote": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/AssetFootnote.js"
+    },
+    "Target": "/SAPAssetManager/Rules/WorkOrders/Operations/Details/OperationAssets/WorkOrderOperationAssets.js",
+    "_Name": "AssetsSection",
+    "_Type": "Section.Type.ObjectTable",
+    "DataSubscriptions": ["MyEquipments", "MyFunctionalLocations", "Documents"]
+}

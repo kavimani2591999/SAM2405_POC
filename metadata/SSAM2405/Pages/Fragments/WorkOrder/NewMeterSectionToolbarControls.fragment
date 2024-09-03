@@ -1,0 +1,18 @@
+[
+    "/SAPAssetManager/Pages/Fragments/Filter/FlexibleSpace.fragment",
+    {
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "$(L,discard)",
+        "Enabled": "/SAPAssetManager/Rules/Meter/NewDesign/NewMeterListDoneEnabled.js",
+        "OnPress": "/SAPAssetManager/Rules/Meter/NewDesign/NewMeterListDiscardToolbar.js",
+        "Visible": "/SAPAssetManager/Rules/Meter/NewDesign/NewMeterListDoneVisible.js",
+        "_Name": "NMSDiscard"
+    },
+    {
+        "_Type": "Control.Type.ToolbarItem",
+        "Caption": "$(L,install_meter)",
+        "OnPress": "/SAPAssetManager/Rules/Meter/NewDesign/NewMeterListInstallToolbar.js",
+        "Visible": "/SAPAssetManager/Rules/Meter/NewDesign/NewMeterListMultipleModeDisabled.js",
+        "_Name": "NMSInstallMeter"
+    }
+]

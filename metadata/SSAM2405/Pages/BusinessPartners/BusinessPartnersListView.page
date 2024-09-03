@@ -1,0 +1,14 @@
+{
+	"Caption": "/SAPAssetManager/Rules/BusinessPartners/BusinessPartnersCaption.js",
+	"Controls": [
+		{
+            "_Type": "Control.Type.SectionedTable",
+            "DataSubscriptions": ["Addresses", "AddressesAtWork", "EmployeeAddresses","AddressCommunications", "AddressesAtWorkComm", "EmployeeCommunications"],
+			"Sections": [
+				"/SAPAssetManager/Pages/Fragments/Partners/BusinessPartnersContactCell.fragment"
+			]
+		}
+	],
+	"_Type": "Page",
+	"_Name": "BusinessPartnersListViewPage"
+}
