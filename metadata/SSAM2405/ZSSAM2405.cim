@@ -3,8 +3,8 @@
 	"ProjectName": "ZSSAM2405",
 	"IntegrationPoints": [
 		{
-			"Source": "/ZSSAM2405/Actions/WorkOrders/Operations/WorkOrderOperationDetailsPopover.action",
-			"Target": "/SAPAssetManager/Actions/WorkOrders/Operations/WorkOrderOperationDetailsPopover.action"
+			"Source": "/ZSSAM2405/Actions/WorkOrders/WorkOrderDetailsAddPopover.action",
+			"Target": "/SAPAssetManager/Actions/WorkOrders/WorkOrderDetailsAddPopover.action"
 		}
 
     ]

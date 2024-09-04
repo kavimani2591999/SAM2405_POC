@@ -28,18 +28,19 @@ export default async function MassUpdatePageMetadataGenerator(clientAPI) {
         binding = clientAPI.getPageProxy().getActionBinding();
     }
 
-    // if (binding['@odata.type'] === '#sap_mobile.InspectionLot') {
-    //     if (binding.InspectionPoints_Nav && binding.InspectionPoints_Nav.length > 0) {
-    //         entityset = binding['@odata.readLink'] + '/InspectionPoints_Nav';
-    //     } else {
-    //         entityset = binding['@odata.readLink'];
-    //     }
-    // } else if (binding['@odata.type'] === '#sap_mobile.MyWorkOrderOperation') {
-    //     entityset = binding['@odata.readLink'] + '/InspectionPoint_Nav';
-    // } else if (binding['@odata.type'] === '#sap_mobile.InspectionPoint' || binding['@odata.type'] === '#sap_mobile.EAMChecklistLink') {
-    //     entityset = binding['@odata.readLink'];
-    // }
-    
+
+
+    if (binding['@odata.type'] === '#sap_mobile.InspectionLot') {
+        if (binding.InspectionPoints_Nav && binding.InspectionPoints_Nav.length > 0) {
+            entityset = binding['@odata.readLink'] + '/InspectionPoints_Nav';
+        } else {
+            entityset = binding['@odata.readLink'];
+        }
+    } else if (binding['@odata.type'] === '#sap_mobile.MyWorkOrderOperation') {
+        entityset = binding['@odata.readLink'] + '/InspectionPoint_Nav';
+    } else if (binding['@odata.type'] === '#sap_mobile.InspectionPoint' || binding['@odata.type'] === '#sap_mobile.EAMChecklistLink') {
+        entityset = binding['@odata.readLink'];
+    }
     page.Controls[0].Sections = [];
     if (entityset) {
         await read(clientAPI, entityset, [], '').then(async function(results) {
@@ -70,7 +71,7 @@ export default async function MassUpdatePageMetadataGenerator(clientAPI) {
                     await addPageSections(clientAPI, bindings[i], page);
                 }
                 addActionBar(page);
-               // addPageOverrides(clientAPI, page);
+                addPageOverrides(clientAPI, page);
                 addToolbar(page);
             }
             return page;
@@ -78,20 +79,17 @@ export default async function MassUpdatePageMetadataGenerator(clientAPI) {
     } else {
         await addPageSections(clientAPI, binding, page);
         addActionBar(page);
-        //addPageOverrides(clientAPI, page);
+        addPageOverrides(clientAPI, page);
         addToolbar(page);
     }
 
-    // addActionBar(page);
-    // await addPageSections(clientAPI, binding, page);
-    // addPageOverrides(clientAPI, page);
-    // addToolbar(page);
+ 
 
     return page;
 }
 
 export async function addPageSections(clientAPI, binding, page) {
-    //await addHeaderSection(clientAPI, binding, page);
+    await addHeaderSection(clientAPI, binding, page);
     await addEDTSection(clientAPI, binding, page);
 }
 
@@ -134,7 +132,12 @@ export function addActionBar(page) {
         'Caption': '$(L,cancel)',
         'OnPress': '/SAPAssetManager/Rules/InspectionCharacteristics/InspectionCharacteristicsEDTCheckForChangesBeforeClose.js',
     },
-    
+    {
+        'Position': 'right',
+        'Icon': '$(PLT,\'\',/SAPAssetManager/Images/filter.android.png,\'\',/SAPAssetManager/Images/filter.android.png)',
+        'Text': '$(L,filter)',
+        'OnPress': '/SAPAssetManager/Rules/InspectionCharacteristics/Update/InspectionCharacteristicsEDTFilter.js',
+    },
     {
         'Position': 'right',
         'SystemItem': '$(PLT,\'Done\',\'\',\'\',\'Done\')',
@@ -330,57 +333,57 @@ export async function addEDTSection(context, binding, page) {
     } else {
         edtHeight = 130;
     }
-    // if (binding['@odata.type'] === '#sap_mobile.InspectionLot') {
-    //     entityset = binding['@odata.readLink'] + '/InspectionChars_Nav';
-    //     if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'WOHeader_Nav') && Object.prototype.hasOwnProperty.call(binding.WOHeader_Nav, 'EAMChecklist_Nav') && binding.WOHeader_Nav.EAMChecklist_Nav.length > 0) {
-    //         queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
-    //     } else {
-    //         queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
-    //     }
-    // } else if (binding['@odata.type'] === '#sap_mobile.EAMChecklistLink') {
-    //     if (IsAndroid(context)) {
-    //         edtHeight = 110;
-    //     } else {
-    //         edtHeight = 85;
-    //     }
-    //     entityset = binding['@odata.readLink'] + '/InspectionChar_Nav';
-    //     queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,EAMChecklist_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
-    // } else if (binding['@odata.type'] === '#sap_mobile.InspectionPoint') {
-    //     entityset = binding['@odata.readLink'] + '/InspectionChar_Nav';
-    //     queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
-    // } else if (binding['@odata.type'] === '#sap_mobile.InspectionCharacteristic') {
-    //     entityset = binding['@odata.readLink'];
-    //     if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'WOHeader_Nav') && Object.prototype.hasOwnProperty.call(binding.WOHeader_Nav, 'EAMChecklist_Nav') && binding.WOHeader_Nav.EAMChecklist_Nav.length > 0) {
-    //         queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
-    //     } else {
-    //         queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
-    //     }
-    // } else if (binding['@odata.type'] === '#sap_mobile.MyWorkOrderHeader') {
-    //     entityset = `InspectionLots('${binding.InspectionLot}')/InspectionChars_Nav`;
-    //     if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'WOHeader_Nav') && Object.prototype.hasOwnProperty.call(binding.WOHeader_Nav, 'EAMChecklist_Nav') && binding.WOHeader_Nav.EAMChecklist_Nav.length > 0) {
-    //         queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
-    //     } else {
-    //         queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
-    //     }
-    // } else if (binding['@odata.type'] === '#sap_mobile.MyWorkOrderOperation') {
-    //     entityset = `InspectionLots('${binding.InspectionLot}')/InspectionChars_Nav`;
-    //     if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'EAMChecklist_Nav') && binding.EAMChecklist_Nav.length > 0) {
-    //         queryOption = `$filter=EAMChecklist_Nav/OperationNo eq '${binding.OperationNo}' and EAMChecklist_Nav/OrderId eq '${binding.OrderId}'&$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar`;
-    //     } else {
-    //         queryOption = `$filter=InspectionPoint_Nav/OperationNo eq '${binding.OperationNo}' and InspectionPoint_Nav/OrderId eq '${binding.OrderId}'&$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar`;
-    //     }
-    // }
-    // await context.count('/SAPAssetManager/Services/AssetManager.service', entityset, queryOption).then(async function(rows) {
-    //     if (rows > 1) {
-    //         height = (rows * edtHeight);
-    //     } else {
-    //         if (IsAndroid(context)) {
-    //             edtHeight = 155;
-    //         } else {
-    //             edtHeight = 135;
-    //         }
-    //     }
-    // });
+    if (binding['@odata.type'] === '#sap_mobile.InspectionLot') {
+        entityset = binding['@odata.readLink'] + '/InspectionChars_Nav';
+        if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'WOHeader_Nav') && Object.prototype.hasOwnProperty.call(binding.WOHeader_Nav, 'EAMChecklist_Nav') && binding.WOHeader_Nav.EAMChecklist_Nav.length > 0) {
+            queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
+        } else {
+            queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
+        }
+    } else if (binding['@odata.type'] === '#sap_mobile.EAMChecklistLink') {
+        if (IsAndroid(context)) {
+            edtHeight = 110;
+        } else {
+            edtHeight = 85;
+        }
+        entityset = binding['@odata.readLink'] + '/InspectionChar_Nav';
+        queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,EAMChecklist_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
+    } else if (binding['@odata.type'] === '#sap_mobile.InspectionPoint') {
+        entityset = binding['@odata.readLink'] + '/InspectionChar_Nav';
+        queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
+    } else if (binding['@odata.type'] === '#sap_mobile.InspectionCharacteristic') {
+        entityset = binding['@odata.readLink'];
+        if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'WOHeader_Nav') && Object.prototype.hasOwnProperty.call(binding.WOHeader_Nav, 'EAMChecklist_Nav') && binding.WOHeader_Nav.EAMChecklist_Nav.length > 0) {
+            queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
+        } else {
+            queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
+        }
+    } else if (binding['@odata.type'] === '#sap_mobile.MyWorkOrderHeader') {
+        entityset = `InspectionLots('${binding.InspectionLot}')/InspectionChars_Nav`;
+        if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'WOHeader_Nav') && Object.prototype.hasOwnProperty.call(binding.WOHeader_Nav, 'EAMChecklist_Nav') && binding.WOHeader_Nav.EAMChecklist_Nav.length > 0) {
+            queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar';
+        } else {
+            queryOption = '$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar';
+        }
+    } else if (binding['@odata.type'] === '#sap_mobile.MyWorkOrderOperation') {
+        entityset = `InspectionLots('${binding.InspectionLot}')/InspectionChars_Nav`;
+        if (userFeaturesLib.isFeatureEnabled(context, context.getGlobalDefinition('/SAPAssetManager/Globals/Features/Checklist.global').getValue()) && Object.prototype.hasOwnProperty.call(binding, 'EAMChecklist_Nav') && binding.EAMChecklist_Nav.length > 0) {
+            queryOption = `$filter=EAMChecklist_Nav/OperationNo eq '${binding.OperationNo}' and EAMChecklist_Nav/OrderId eq '${binding.OrderId}'&$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,EAMChecklist_Nav/MyWOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/Equipment_Nav,InspectionLot_Nav/WOHeader_Nav,EAMChecklist_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=EAMChecklist_Nav/OperationNo,EAMChecklist_Nav/Equipment,EAMChecklist_Nav/FunctionalLocation,InspectionNode,InspectionChar`;
+        } else {
+            queryOption = `$filter=InspectionPoint_Nav/OperationNo eq '${binding.OperationNo}' and InspectionPoint_Nav/OrderId eq '${binding.OrderId}'&$expand=InspCharDependency_Nav,MasterInspCharLongText_Nav,MasterInspChar_Nav,NotifItems_Nav,InspectionPoint_Nav/WOOperation_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/Equip_Nav,InspectionLot_Nav/WOHeader_Nav,InspectionPoint_Nav/FuncLoc_Nav,InspValuation_Nav,InspectionCode_Nav,InspectionMethod_Nav&$orderby=InspectionPoint_Nav/OperationNo,InspectionPoint_Nav/EquipNum,InspectionPoint_Nav/FuncLocIntern,InspectionNode,InspectionChar`;
+        }
+    }
+    await context.count('/SAPAssetManager/Services/AssetManager.service', entityset, queryOption).then(async function(rows) {
+        if (rows > 1) {
+            height = (rows * edtHeight);
+        } else {
+            if (IsAndroid(context)) {
+                edtHeight = 155;
+            } else {
+                edtHeight = 135;
+            }
+        }
+    });
 
     page.Controls[0].Sections.push(
         {
@@ -453,7 +456,7 @@ export async function addEDTSection(context, binding, page) {
                             'Property': 'InspectionChar',
                             'OnValueChange': '',
                             'Parameters': {
-                                'Value': 'A',
+                                'Value': '/SAPAssetManager/Rules/InspectionCharacteristics/Update/InspectionCharacteristicsDescriptionID.js',
                             },
                         },
                         {
@@ -464,7 +467,7 @@ export async function addEDTSection(context, binding, page) {
                             'Property': 'LowerLimit',
                             'OnValueChange': '',
                             'Parameters': {
-                                'Value': 'B',
+                                'Value': '/SAPAssetManager/Rules/InspectionCharacteristics/Update/InspectionCharacteristicsTargetSpecification.js',
                             },
                         },
                         '/SAPAssetManager/Rules/InspectionCharacteristics/Update/InspectionCharacteristicsQuantitativeAndQualitativeEDTControls.js',
@@ -477,7 +480,7 @@ export async function addEDTSection(context, binding, page) {
                             'Property': 'Valuation',
                             'OnValueChange': '',
                             'Parameters': {
-                                'Value': 'C',
+                                'Value': '/SAPAssetManager/Rules/InspectionCharacteristics/Update/InspectionCharacteristicsValuationInitialValueEDT.js',
                             },
                         },
                         {
@@ -488,14 +491,14 @@ export async function addEDTSection(context, binding, page) {
                             'OnValueChange': '/SAPAssetManager/Rules/InspectionCharacteristics/Update/InspectionCharacteristicsCommentEDTOnChange.js',
                             'Property': 'Remarks',
                             'Parameters': {
-                                'Value': 'D',
+                                'Value': '{Remarks}',
                             },
                         },
                         {
                             'Type': 'Button',
                             'Name': 'Notification',
                             'IsMandatory': false,
-                            'IsReadOnly': true,
+                            'IsReadOnly': '/SAPAssetManager/Rules/InspectionCharacteristics/InspectionCharacteristicsNotificationEnableEDT.js',
                             'OnValueChange': '',
                             'Property': '',
                             'Parameters': {
